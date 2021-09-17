@@ -1,6 +1,5 @@
 import json
 import requests
-from requests.api import delete
 
 from requests.structures import CaseInsensitiveDict
 
@@ -8,6 +7,53 @@ class sellix:
     # token = your Sellix bearer token (required)
     def __init__(self, token):
         self.token = token
+
+    # Return all products
+    def list_products(self):
+        url = "https://dev.sellix.io/v1/products"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get product by ID
+    # cat_id = ID of the product you want to get (required)
+    def get_product(self, prod_id):
+        url = f"https://dev.sellix.io/v1/products/{prod_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Create file product
+    # title = string, product title (required)
+    # description = string, product description (required)
+    # price = float, product price (required)
+    # gateways = string, gateways. gateways: paypal, bitcoin, ethereum, litecoin, perfectmoney, bitcoincash, skrill, paydash, lexholdingsgroup, stripe, cashapp. (required)
+    # discount_value = float, discount amount (required)
+    # currency = product currency. e.g USD (required)
+    def create_serial_product(self, title, description, price, gateways, currency, serial_list):
+        url = f"https://dev.sellix.io/v1/products"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        data = f'{{"title": "{title}", "price": {price}, "currency": "{currency}", "description": "{description}", "gateways": {gateways}, "type": "serials", "serials": {serial_list}}}'
+
+        print(data)
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
 
     # Return all categories
     def list_categories(self):
@@ -105,3 +151,5 @@ class sellix:
         return parsed
 
 sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
+p = sellix_api.create_serial_product(title="Title", description="Description", price=20.0, gateways=["paypal", "bitcoin"], currency="USD", serial_list=["ser1", "ser2"])
+print(p)
