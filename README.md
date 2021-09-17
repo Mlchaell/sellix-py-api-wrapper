@@ -3,7 +3,12 @@
 # Usage
 
 ## Overview
-- #[Init](README.md#Init:)
+- [Init](README.md#Init)
+- [Products](README.md#Products)
+- [Categories](README.md#Categories)
+- [Orders](README.md#Orders)
+- [Feedback](README.md#Feedback)
+- [Coupons](README.md#Coupons)
 
 ## Init:
 ```
