@@ -33,20 +33,67 @@ class sellix:
 
         return parsed
 
-    # Create file product
+    # Create serial product
     # title = string, product title (required)
     # description = string, product description (required)
     # price = float, product price (required)
     # gateways = string, gateways. gateways: paypal, bitcoin, ethereum, litecoin, perfectmoney, bitcoincash, skrill, paydash, lexholdingsgroup, stripe, cashapp. (required)
     # discount_value = float, discount amount (required)
     # currency = product currency. e.g USD (required)
-    def create_serial_product(self, title, description, price, gateways, currency, serial_list):
+    # serial_list = list of serials
+    # delivery_text = delivery text (required)
+    def create_serial_product(self, title, description, price, gateways, currency, serial_list, delivery_text):
         url = f"https://dev.sellix.io/v1/products"
 
         headers = CaseInsensitiveDict()
         headers["Authorization"] = f"Bearer {self.token}"
 
-        data = f'{{"title": "{title}", "price": {price}, "currency": "{currency}", "description": "{description}", "gateways": {gateways}, "type": "serials", "serials": {serial_list}}}'
+        data = f'''
+        {{
+  "title": "{title}",
+  "price": {price},
+  "currency": "{currency}",
+  "description": "{description}",
+  "gateways": {gateways},
+  "type": "serials",
+  "stock_delimiter": ",",
+  "serials": {serial_list},
+  "delivery_text": "{delivery_text}"
+  }}
+        '''.replace("'", '"')
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Create service product
+    # title = string, product title (required)
+    # description = string, product description (required)
+    # price = float, product price (required)
+    # gateways = string, gateways. gateways: paypal, bitcoin, ethereum, litecoin, perfectmoney, bitcoincash, skrill, paydash, lexholdingsgroup, stripe, cashapp. (required)
+    # discount_value = float, discount amount (required)
+    # currency = product currency. e.g USD (required)
+    # service_text = service text
+    # delivery_text = delivery text (required)
+    def create_service_product(self, title, description, price, gateways, currency, service_text, delivery_text):
+        url = f"https://dev.sellix.io/v1/products"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        data = f'''
+        {{
+  "title": "{title}",
+  "price": {price},
+  "currency": "{currency}",
+  "description": "{description}",
+  "gateways": {gateways},
+  "type": "service",
+  "service_text": "{service_text}",
+  "delivery_text": "{delivery_text}"
+  }}
+        '''.replace("'", '"')
 
         print(data)
 
@@ -151,5 +198,5 @@ class sellix:
         return parsed
 
 sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
-p = sellix_api.create_serial_product(title="Title", description="Description", price=20.0, gateways=["paypal", "bitcoin"], currency="USD", serial_list=["ser1", "ser2"])
+p = sellix_api.create_service_product(title="Title", description="Description", price=20.0, gateways=["bitcoin"], currency="USD", service_text="Service Text", delivery_text="Delivery Text")
 print(p)
