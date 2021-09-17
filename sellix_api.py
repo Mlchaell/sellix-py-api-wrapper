@@ -268,4 +268,45 @@ class sellix:
 
         return parsed
 
+    # Get feedback
+    def get_feedback(self):
+        url = f"https://dev.sellix.io/v1/feedback"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get feedback by ID
+    # feedback_id = ID of the feedback you want to get (required)
+    def get_feedback_by_id(self, feedback_id):
+        url = f"https://dev.sellix.io/v1/feedback/{feedback_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Reply to feedback
+    # feedback_id = ID of the feedback you want to reply to (required)
+    # feedback_responce = string, feedback responce
+    def get_feedback_by_id(self, feedback_id, feedback_responce):
+        url = f"https://dev.sellix.io/v1/feedback/reply/{feedback_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        data = f'{{"reply": "{feedback_responce}"}}'
+
+        resp = requests.get(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
 sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
