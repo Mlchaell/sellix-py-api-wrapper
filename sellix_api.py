@@ -8,6 +8,10 @@ class sellix:
     def __init__(self, token):
         self.token = token
 
+    #          #
+    # PRODUCTS #
+    #          #
+
     # Return all products
     def list_products(self):
         url = "https://dev.sellix.io/v1/products"
@@ -148,6 +152,11 @@ class sellix:
 
         return parsed
 
+    #            #
+    # CATEGORIES #
+    #            #
+
+
     # Return all categories
     def list_categories(self):
         url = "https://dev.sellix.io/v1/categories"
@@ -243,6 +252,11 @@ class sellix:
 
         return parsed
 
+    #        #
+    # ORDERS #
+    #        #
+
+
     # Get orders
     def get_orders(self):
         url = f"https://dev.sellix.io/v1/orders"
@@ -267,6 +281,11 @@ class sellix:
         parsed = json.loads(resp.content)
 
         return parsed
+
+    #          #
+    # FEEDBACK #
+    #          #
+
 
     # Get feedback
     def get_feedback(self):
@@ -309,4 +328,99 @@ class sellix:
 
         return parsed
 
-sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
+    #         #
+    # COUPONS #
+    #         #
+
+    # Create a Coupon
+    # Code = coupon code
+    # Discount Value = float, percentage amount of the discount
+    # Max Uses = int, max coupon code uses. defaults to -d (-1 = infinte)
+    # Products Bound = list, list of product IDs the code can be used on
+    def create_coupon(self, code=None, discount_value=None, max_uses=-1, products_bound=None):
+        url = f"https://dev.sellix.io/v1/coupons"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        if products_bound is None:
+            data = f'{{"code": "{code}", "discount_value": "{discount_value}", "max_uses": {max_uses}}}'
+        elif products_bound is not None:
+            data = f'{{"code": "{code}", "discount_value": "{discount_value}", "max_uses": {max_uses}, "products_bound": "{products_bound}"}}'
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Edit a Coupon
+    # Coupon ID = coupon ID
+    # Code = coupon code
+    # Discount Value = float, percentage amount of the discount
+    # Max Uses = int, max coupon code uses (-1 = infinte)
+    # Products Bound = list, list of product IDs the code can be used on
+    def edit_coupon(self, coupon_id=None, code=None, discount_value=None, max_uses=None, products_bound=None):
+        url = f"https://dev.sellix.io/v1/coupons/{coupon_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        if code is not None:
+            data = f'{{"code": "{code}"}}'
+            resp = requests.post(url, headers=headers, data=data)
+            parsed = json.loads(resp.content)
+        if discount_value is not None:
+            data = f'{{"discount_value": "{discount_value}"}}'
+            resp = requests.post(url, headers=headers, data=data)
+            parsed = json.loads(resp.content)
+        if max_uses is not None:
+            data = f'{{"max_uses": "{max_uses}"}}'
+            resp = requests.post(url, headers=headers, data=data)
+            parsed = json.loads(resp.content)
+        if products_bound is not None:
+            data = f'{{"products_bound": "{products_bound}"}}'
+            resp = requests.post(url, headers=headers, data=data)
+            parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Delete a Coupon
+    # coupon_id = coupon ID (required)
+    def delete_coupon(self, coupon_id):
+        url = f"https://dev.sellix.io/v1/coupons/{coupon_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        resp = requests.delete(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get all coupons
+    def list_coupons(self):
+        url = f"https://dev.sellix.io/v1/coupons"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+    
+    # Get coupons by ID
+    # Coupon ID = ID of the coupon
+    def get_coupon(self, coupon_id):
+        url = f"https://dev.sellix.io/v1/coupons/{coupon_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
