@@ -95,9 +95,55 @@ class sellix:
   }}
         '''.replace("'", '"')
 
-        print(data)
-
         resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Edit a category
+    # prod_id = product ID (required)
+    # title = string, new title (not required)
+    # description = string, new description (not required)
+    # price = float, new new price (not required)
+    # gateways = list, list of gateways to accept ex: ["paypal", "bitcoin"] (not required)
+    def edit_product(self, prod_id, title=None, description=None, price=None, gateways=None):
+        url = f"https://dev.sellix.io/v1/products/{prod_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        if title is not None:
+            data = f'{{"title": "{title}"}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed1 = json.loads(resp.content)
+            print(parsed1)
+        if description is not None:
+            data = f'{{"description": "{description}"}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed2 = json.loads(resp.content)
+            print(parsed2)
+        if price is not None:  # TODO: This doesn't work
+            data = f'{{"price": {price}}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed3 = json.loads(resp.content)
+            print(parsed3)
+        if gateways is not None:
+            data = f'{{"unlisted": {gateways}}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed4 = json.loads(resp.content)
+            print(parsed4)
+
+    # Edit a product
+    # prod_id = product ID (required)
+    def delete_product(self, prod_id):
+        url = f"https://dev.sellix.io/v1/products/{prod_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        resp = requests.delete(url, headers=headers)
         parsed = json.loads(resp.content)
 
         return parsed
@@ -184,7 +230,7 @@ class sellix:
             print(parsed4)
 
     # Delete a category
-    # title = category ID (required)
+    # cat_id = category ID (required)
     def delete_category(self, cat_id):
         url = f"https://dev.sellix.io/v1/categories/{cat_id}"
 
@@ -198,5 +244,3 @@ class sellix:
         return parsed
 
 sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
-p = sellix_api.create_service_product(title="Title", description="Description", price=20.0, gateways=["bitcoin"], currency="USD", service_text="Service Text", delivery_text="Delivery Text")
-print(p)
