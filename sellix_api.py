@@ -100,7 +100,7 @@ class sellix:
 
         return parsed
 
-    # Edit a category
+    # Edit a product
     # prod_id = product ID (required)
     # title = string, new title (not required)
     # description = string, new description (not required)
@@ -134,7 +134,7 @@ class sellix:
             parsed4 = json.loads(resp.content)
             print(parsed4)
 
-    # Edit a product
+    # Delete a product
     # prod_id = product ID (required)
     def delete_product(self, prod_id):
         url = f"https://dev.sellix.io/v1/products/{prod_id}"
