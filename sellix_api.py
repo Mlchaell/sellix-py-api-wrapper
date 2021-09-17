@@ -243,4 +243,29 @@ class sellix:
 
         return parsed
 
+    # Get orders
+    def get_orders(self):
+        url = f"https://dev.sellix.io/v1/orders"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get orders by ID
+    # order_id = ID of the order you want to get (required)
+    def get_order(self, order_id):
+        url = f"https://dev.sellix.io/v1/orders/{order_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
 sellix_api = sellix("rSlUGGDomzDM7Qzrojpooq7AyF968ipTrZxWA3zkYBYbfPzhHM48iFyA0kT5p8Fy")
