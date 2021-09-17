@@ -98,3 +98,39 @@ Get orders by ID: sellix_api.get_order(order_id)
 Get all feedback: sellix_api.get_feedback()
 Get feedback by ID: sellix_api.get_feedback_by_id(feedback_id)
 ```
+
+## Coupons
+
+### Create a Coupon
+- Code = string, coupon code (required)
+- Discount Value = float, percentage amount of the discount (required)
+- Max Uses = int, max coupon code uses. defaults to -d (-1 = infinte) (required)
+- Products Bound = list, list of product IDs the code can be used on (not required)
+
+```
+sellix_api.create_coupon()
+```
+
+### Edit a Coupon
+- Coupon ID = coupon ID
+- Code = string, coupon code
+- Discount Value = float, percentage amount of the discount
+- Max Uses = int, max coupon code uses (-1 = infinte)
+- Products Bound = list, list of product IDs the code can be used on
+
+```
+sellix_api.edit_coupon()
+```
+
+### Delete a Coupon
+- Coupon ID - ID of the coupon
+
+```
+sellix_api.delete_coupon()
+```
+
+### Get coupons
+```
+Get all coupons: sellix_api.list_coupons()
+Get coupons by ID: sellix_api.get_coupons(coupon_id)
+```
