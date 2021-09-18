@@ -1,0 +1,4 @@
+build/*
+dist/*
+sellix_py_api_wrapper.egg-info/*
+setup.py
