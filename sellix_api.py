@@ -301,7 +301,7 @@ class sellix:
 
     # Get feedback by ID
     # feedback_id = ID of the feedback you want to get (required)
-    def get_feedback_by_id(self, feedback_id):
+    def feedback_reply(self, feedback_id):
         url = f"https://dev.sellix.io/v1/feedback/{feedback_id}"
 
         headers = CaseInsensitiveDict()
@@ -315,7 +315,7 @@ class sellix:
     # Reply to feedback
     # feedback_id = ID of the feedback you want to reply to (required)
     # feedback_responce = string, feedback responce
-    def get_feedback_by_id(self, feedback_id, feedback_responce):
+    def reply(self, feedback_id, feedback_responce):
         url = f"https://dev.sellix.io/v1/feedback/reply/{feedback_id}"
 
         headers = CaseInsensitiveDict()
@@ -424,3 +424,77 @@ class sellix:
         parsed = json.loads(resp.content)
 
         return parsed
+
+    #         #
+    # QUERIES #
+    #         #
+
+    # Reply to query
+    # query_id = ID of the query you want to reply to (required)
+    # query_responce = string, query responce
+    def query_reply(self, query_id, query_responce):
+        url = f"https://dev.sellix.io/v1/feedback/reply/{query_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        data = f'{{"reply": "{query_responce}"}}'
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Close queries
+    # Query ID = int, query ID
+    def close_query(self, query_id):
+        url = f"https://dev.sellix.io/v1/queries/{query_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.post(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Reopen queries
+    # Query ID = int, query ID
+    def reopen_query(self, query_id):
+        url = f"https://dev.sellix.io/v1/queries/reopen/{query_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.post(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # List all queries
+    def list_queries(self):
+        url = f"https://dev.sellix.io/v1/queries"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get query by ID
+    def get_query(self, query_id):
+        url = f"https://dev.sellix.io/v1/queries/{query_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+sellix_api = sellix("XpTu8NN6ru4wVviAkwONa0RT8JvTCyyDOjNbJqOd4jJ5VQtDcbQ2Ujf0WHqsb6Tf")
+p = sellix_api.reopen_query("123")
+print(p)
