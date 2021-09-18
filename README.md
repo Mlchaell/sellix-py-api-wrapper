@@ -15,7 +15,7 @@
 ## Install:
 
 ```
-pip install sellix-py-api-wrapper
+pip3 install sellix-py-api-wrapper
 ```
 
 ## Init:
