@@ -500,9 +500,9 @@ class sellix:
     #            #
 
     # Create blacklist
-    # Blacklist type = string, blacklist type. ex: email, ip, or country
-    # Data = string, blocked data. ex: country code, email, or an IP address
-    # Note = string, internal note for blacklist reasons
+    # Blacklist type = string, blacklist type. ex: email, ip, or country (required)
+    # Data = string, blocked data. ex: country code, email, or an IP address (required)
+    # Note = string, internal note for blacklist reasons (required)
     def create_blacklist(self, blacklist_type, blacklist_data, note):
         url = f"https://dev.sellix.io/v1/blacklists"
 
@@ -519,6 +519,9 @@ class sellix:
         return parsed
 
     # Edit a blacklist
+    # Blacklist ID = int, blacklist ID (required)
+    # Blacklist type = string, blacklist type. ex: email, ip, country (required)
+    # Note = string, interal note for blacklist reasons (required)
     def edit_blacklist(self, blacklist_id, blacklist_type=None, blacklist_data=None, note=None):
         url = f"https://dev.sellix.io/v1/blacklists/{blacklist_id}"
 
@@ -543,7 +546,7 @@ class sellix:
             print(parsed1)
 
     # Delete a blacklist
-    # blacklist_id = product ID (required)
+    # blacklist_id = blacklist ID (required)
     def delete_blacklist(self, blacklist_id):
         url = f"https://dev.sellix.io/v1/blacklists/{blacklist_id}"
 
