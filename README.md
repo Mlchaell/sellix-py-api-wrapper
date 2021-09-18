@@ -160,14 +160,14 @@ Get coupons by ID: sellix_api.get_coupons(coupon_id)
 sellix_api.query_reply()
 ```
 
-## Close Query
+### Close Query
 - Query ID = ID of the query you want to reply to (required)
 
 ```
 sellix_api.close_query()
 ```
 
-## Reopen Query
+### Reopen Query
 - Query ID = ID of the query you want to reply to (required)
 
 ```
