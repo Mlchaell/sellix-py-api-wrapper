@@ -251,7 +251,7 @@ sellix_api.create_intergrated_payment()
 - Payment ID = string, payment ID
 
 ```
-sellix_id.delete(payment)
+sellix_id.delete_payment()
 ```
 
 ## Todo
