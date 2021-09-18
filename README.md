@@ -220,5 +220,30 @@ Get all blacklists: sellix_api.list_blacklists()
 Get blacklist by ID: sellix_api.get_blacklist(blacklist_id)
 ```
 
+## Payments
+
+### Payment Types
+```
+**Integrated**
+With the integrated checkout option, Sellix handles the checkout aspect for you by only returning a unique payment URL. This unique URL contains our realtime checkout page.
+
+**White-label**
+The white-label checkout flow provides the raw order created rather than a payment URL. With the raw order information, you are able to develop and integrate your own checkout experience completely separate from Sellix.
+This has the added downside of not having the realtime status updates that the integrated checkout flow offers, but this can of course be implemented on your side using the webhooks.
+```
+
+### Create Intergrated Payment
+- Gateway = string, paypal, bitcoin, ethereum, litecoin, perfectmoney, bitcoincash, skrill, paydash, lexholdingsgroup, stripe, cashapp. (required) 
+- Email = string, customers email. where products will be sent (required)
+- Return URL = string, return URL (required)
+- Currency = string, currency type, ex: USD (required)
+- Value = float, amount the customer would pay (required if product ID is not supplied)
+- Product ID = string, ID of product customer is buying (required is value is not given)
+- Quantity = float, quantity customer if buying (required if product ID is supplied)
+
+```
+sellix_api.create_intergrated_payment()
+```
+
 ## Todo
-- Payments
+- Whitelabel Payments
