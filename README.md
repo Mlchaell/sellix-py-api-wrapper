@@ -247,5 +247,12 @@ This has the added downside of not having the realtime status updates that the i
 sellix_api.create_intergrated_payment()
 ```
 
+### Delete Payment
+- Payment ID = string, payment ID
+
+```
+sellix_id.delete(payment)
+```
+
 ## Todo
 - Whitelabel Payments
