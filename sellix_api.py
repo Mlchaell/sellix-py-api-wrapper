@@ -446,7 +446,7 @@ class sellix:
         return parsed
 
     # Close queries
-    # Query ID = int, query ID
+    # Query ID = int, query ID (required)
     def close_query(self, query_id):
         url = f"https://dev.sellix.io/v1/queries/{query_id}"
 
@@ -459,7 +459,7 @@ class sellix:
         return parsed
 
     # Reopen queries
-    # Query ID = int, query ID
+    # Query ID = int, query ID (required)
     def reopen_query(self, query_id):
         url = f"https://dev.sellix.io/v1/queries/reopen/{query_id}"
 
@@ -495,6 +495,88 @@ class sellix:
 
         return parsed
 
-sellix_api = sellix("XpTu8NN6ru4wVviAkwONa0RT8JvTCyyDOjNbJqOd4jJ5VQtDcbQ2Ujf0WHqsb6Tf")
-p = sellix_api.reopen_query("123")
-print(p)
+    #            #
+    # BLACKLISTS #
+    #            #
+
+    # Create blacklist
+    # Blacklist type = string, blacklist type. ex: email, ip, or country
+    # Data = string, blocked data. ex: country code, email, or an IP address
+    # Note = string, internal note for blacklist reasons
+    def create_blacklist(self, blacklist_type, blacklist_data, note):
+        url = f"https://dev.sellix.io/v1/blacklists"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        data = f'{{"type": "{blacklist_type}", "data": "{blacklist_data}", "note": "{note}"}}'
+
+        print(data)
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Edit a blacklist
+    def edit_blacklist(self, blacklist_id, blacklist_type=None, blacklist_data=None, note=None):
+        url = f"https://dev.sellix.io/v1/blacklists/{blacklist_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        if blacklist_type is not None:
+            data = f'{{"type": "{blacklist_data}"}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed1 = json.loads(resp.content)
+            print(parsed1)
+        if blacklist_data is not None:
+            data = f'{{"data": "{data}"}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed1 = json.loads(resp.content)
+            print(parsed1)
+        if note is not None:
+            data = f'{{"note": "{note}"}}'
+            resp = requests.put(url, headers=headers, data=data)
+            parsed1 = json.loads(resp.content)
+            print(parsed1)
+
+    # Delete a blacklist
+    # blacklist_id = product ID (required)
+    def delete_blacklist(self, blacklist_id):
+        url = f"https://dev.sellix.io/v1/blacklists/{blacklist_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        resp = requests.delete(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # List blacklists
+    def list_blacklists(self):
+        url = "https://dev.sellix.io/v1/blacklists"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Get blacklist by ID
+    # Blacklist ID = int, blacklist ID (required)
+    def get_blacklist(self, blacklist_id):
+        url = f"https://dev.sellix.io/v1/blacklists/{blacklist_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        resp = requests.get(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
