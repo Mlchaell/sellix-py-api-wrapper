@@ -11,6 +11,7 @@
 - [Coupons](README.md#Coupons)
 - [Queries](README.md#Queries)
 - [Blacklists](README.md#Blacklists)
+- [Todo](README.md#Todo)
 
 ## Init:
 ```
@@ -213,3 +214,6 @@ sellix_api.delete_blacklist()
 Get all blacklists: sellix_api.list_blacklists()
 Get blacklist by ID: sellix_api.get_blacklist(blacklist_id)
 ```
+
+## Todo
+- Payments
