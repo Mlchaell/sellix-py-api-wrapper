@@ -10,6 +10,7 @@
 - [Feedback](README.md#Feedback)
 - [Coupons](README.md#Coupons)
 - [Queries](README.md#Queries)
+- [Blacklists](README.md#Blacklists)
 
 ## Init:
 ```
@@ -178,4 +179,37 @@ sellix_api.reopen_query()
 ```
 Get all queries: sellix_api.list_queries()
 Get query by ID: sellix_api.get_query(query_id)
+```
+
+## Blacklists
+
+### Create a Blacklist 
+- Blacklist type = string, blacklist type. ex: email, ip, or country
+- Data = string, blocked data. ex: country code, email, or an IP address
+- Note = string, internal note for blacklist reasons
+
+```
+sellix_api.create_blacklist()
+```
+
+### Edit a Blacklist
+- Blacklist ID = int, blacklist ID (required)
+- Blacklist type = string, blacklist type. ex: email, ip, country (required)
+- Note = string, interal note for blacklist reasons (required)
+
+```
+sellix_api.edit_blacklist()
+```
+
+### Delete Blacklist
+- Blacklist ID = blacklist ID (required)
+
+```
+sellix_api.delete_blacklist()
+```
+
+### Get blacklists
+```
+Get all blacklists: sellix_api.list_blacklists()
+Get blacklist by ID: sellix_api.get_blacklist(blacklist_id)
 ```
