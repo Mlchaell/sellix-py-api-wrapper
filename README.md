@@ -9,6 +9,7 @@
 - [Orders](README.md#Orders)
 - [Feedback](README.md#Feedback)
 - [Coupons](README.md#Coupons)
+- [Queries](README.md#Queries)
 
 ## Init:
 ```
@@ -93,6 +94,13 @@ Get categories by ID: sellix_api.get_category(category_id)
 
 ## Orders
 
+### Reply to Feedback
+- Feedback ID = int, ID of the feedback you want to reply to (required)
+- Feedback Responce = string, feedback repsonce
+```
+sellix_api.feedback_reply()
+```
+
 ### Get Orders
 ```
 Get all orders: sellix_api.get_orders()
@@ -141,4 +149,33 @@ sellix_api.delete_coupon()
 ```
 Get all coupons: sellix_api.list_coupons()
 Get coupons by ID: sellix_api.get_coupons(coupon_id)
+```
+## Queries
+
+### Reply to Query
+- Query ID = ID of the query you want to reply to (required)
+- Query Responce = string, query responce
+
+```
+sellix_api.query_reply()
+```
+
+## Close Query
+- Query ID = ID of the query you want to reply to (required)
+
+```
+sellix_api.close_query()
+```
+
+## Reopen Query
+- Query ID = ID of the query you want to reply to (required)
+
+```
+sellix_api.reopen_query()
+```
+
+### Get Queries
+```
+Get all queries: sellix_api.list_queries()
+Get query by ID: sellix_api.get_query(query_id)
 ```
