@@ -583,3 +583,65 @@ class sellix:
         parsed = json.loads(resp.content)
 
         return parsed
+
+    #          #
+    # PAYMENTS #
+    #          #
+
+    # Create payment
+    # Gateway = string, paypal, bitcoin, ethereum, litecoin, perfectmoney, bitcoincash, skrill, paydash, lexholdingsgroup, stripe, cashapp. (required) 
+    # Email = string, customers email. where products will be sent (required)
+    # Return URL = string, return URL (required)
+    # Currency = string, currency type, ex: USD (required)
+    # Value = float, amount the customer would pay (required if product ID is not supplied)
+    # Product ID = string, ID of product customer is buying (required is value is not given)
+    # Quantity = float, quantity customer if buying (required if product ID is supplied)
+    def create_intergrated_payment(self, gateway, email, return_url, currency, value=None, title=None, product_id=None, quantity=None):
+        url = "https://dev.sellix.io/v1/payments"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+
+        if value is None:
+            data = f'''
+    {{
+    "product_id": "{product_id}",
+    "gateway": "{gateway}",
+    "currency": "{currency}",
+    "quantity": {quantity},
+    "email": "{email}",
+    "white_label": false,
+    "return_url": "{return_url}"
+    }}
+            '''
+        else:
+            data = f'''
+    {{
+    "title": "{title}",
+    "gateway": "{gateway}",
+    "currency": "{currency}",
+    "value": {value},
+    "email": "{email}",
+    "white_label": false,
+    "return_url": "{return_url}"
+    }}
+            '''
+
+        resp = requests.post(url, headers=headers, data=data)
+        parsed = json.loads(resp.content)
+
+        return parsed
+
+    # Delete a payment
+    # Payment ID = payment ID (required)
+    def delete_payment(self, payment_id):
+        url = f"https://dev.sellix.io/v1/payments/{payment_id}"
+
+        headers = CaseInsensitiveDict()
+        headers["Authorization"] = f"Bearer {self.token}"
+        headers["Content-Type"] = "application/json"
+
+        resp = requests.delete(url, headers=headers)
+        parsed = json.loads(resp.content)
+
+        return parsed
