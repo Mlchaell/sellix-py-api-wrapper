@@ -10,7 +10,8 @@
 - [Coupons](README.md#Coupons)
 - [Queries](README.md#Queries)
 - [Blacklists](README.md#Blacklists)
-- [Todo](README.md#Todo)
+- [Blacklists](README.md#Blacklists)
+- [Payments](README.md#Payments)
 
 ## Install:
 
