@@ -1,8 +1,7 @@
 # Python Sellix.io API Wrapper
 
-# Usage
-
 ## Overview
+- [Install](README.md#Install)
 - [Init](README.md#Init)
 - [Products](README.md#Products)
 - [Categories](README.md#Categories)
@@ -12,6 +11,12 @@
 - [Queries](README.md#Queries)
 - [Blacklists](README.md#Blacklists)
 - [Todo](README.md#Todo)
+
+## Install:
+
+```
+pip install sellix-py-api-wrapper
+```
 
 ## Init:
 ```
