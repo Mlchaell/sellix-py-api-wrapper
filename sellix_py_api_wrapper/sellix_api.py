@@ -433,7 +433,7 @@ class sellix:
     # query_id = ID of the query you want to reply to (required)
     # query_responce = string, query responce
     def query_reply(self, query_id, query_responce):
-        url = f"https://dev.sellix.io/v1/feedback/reply/{query_id}"
+        url = f"https://dev.sellix.io/v1/queries/reply/{query_id}"
 
         headers = CaseInsensitiveDict()
         headers["Authorization"] = f"Bearer {self.token}"
